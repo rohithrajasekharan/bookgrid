@@ -1,12 +1,11 @@
 import axios from 'axios';
+const ROOT_URL = 'http://localhost:8080/books/post';
 export const FETCH_POSTS = 'FETCH_POSTS';
-const ROOT_URL = 'http://reduxblog.herokuapp.com/api';
-const API_KEY ='?key=bfnjvdkxjgn';
 export const CREATE_POST = 'CREATE_POST';
 export const FETCH_POST = 'FETCH_POST';
 export const DELETE_POST = 'DELETE_POST';
 export function fetchPosts(){
-  const request = axios.get(`${ROOT_URL}/posts${API_KEY}`);
+  const request = axios.get(`${ROOT_URL}`);
 
   return {
          type: FETCH_POSTS,
@@ -14,7 +13,7 @@ export function fetchPosts(){
   };
 }
 export function createPost(props) {
-  const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, props);
+  const request = axios.post(`${ROOT_URL}`, props);
 
   return{
     type: CREATE_POST,
@@ -22,7 +21,7 @@ export function createPost(props) {
   }
 }
 export function fetchPost(id) {
-  const request = axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`);
+  const request = axios.get(`${ROOT_URL}/${id}`);
 
   return {
          type: FETCH_POST,
@@ -30,7 +29,7 @@ export function fetchPost(id) {
   };
 }
 export function deletePost(id) {
-  const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`);
+  const request = axios.delete(`${ROOT_URL}/${id}`);
 
   return {
          type: DELETE_POST,

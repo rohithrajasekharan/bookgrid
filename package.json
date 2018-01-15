@@ -7,11 +7,18 @@
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "logger": "0.0.1",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.13.9",
     "morgan": "^1.9.0",
+    "node": "^9.4.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth20": "^1.0.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -27,14 +34,19 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently 'npm run react' 'npm run server'",
+    "react": "react-scripts start",
+    "server": "nodemon server/app.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
-  "main": "index.js",
-  "devDependencies": {},
+  "main": "server/app.js",
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.14.8"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rohithrajasekharan/bookgrid.git"

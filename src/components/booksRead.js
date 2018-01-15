@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom';
   renderBooks(){
     return this.props.books.map((book) => {
       return (
-        <li className="list-group-item" key={book.id}>
-        <Link to={"/posts/"+book.id}>
+        <li className="list-group-item" key={book._id}>
+        <Link to={"posts/"+book._id}>
         <span className="col-md-9">{book.categories}</span>
         <strong>{book.title}</strong>
         </Link>
