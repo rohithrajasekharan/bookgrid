@@ -16,8 +16,8 @@ var BookSchema = mongoose.Schema({
 var Book = module.exports = mongoose.model('Book', BookSchema);
 
 //save book to the database
-module.exports.createBook = (newUser, callback) => {
-	        newUser.save(callback);
+module.exports.createBook = (newBook, callback) => {
+	        newBook.save(callback);
 	}
 
 //find book using the id given by mongodb

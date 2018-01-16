@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
@@ -19,6 +20,7 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
