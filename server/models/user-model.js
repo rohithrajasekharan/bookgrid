@@ -8,7 +8,8 @@ var UserSchema = mongoose.Schema({
 	},
 	email: {
 		type: String,
-		unique: true
+		unique: true,
+		sparse: true
 	},
   password: {
 		type: String
@@ -18,7 +19,10 @@ var UserSchema = mongoose.Schema({
   },
 	facebookId: {
     type: String
-  }
+  },
+	avatar: {
+		type: String
+	}
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

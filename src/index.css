@@ -1,5 +1,113 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+}
+a{
+  text-decoration: none !important;
+   outline: 0 !important;
+}
+
+.form-control{
+  border: none !important;
+}
+input{
+  max-height: 35px !important;
+  width: 50%;
+  font-size: 15px;
+  padding: 10px;
+  background-color: #4DD0E1;
+  color: white;
+  border: none;
+  margin-left: 10%;
+}
+@media screen and (max-width: 746px){input{
+  max-height: 35px !important;
+  width: 80%;
+  font-size: 15px;
+  padding: 10px;
+  border: none;
+  margin-left: 10%;
+}}
+#icon{
+  margin-right: 2% !important;
+}
+#avatar{
+  cursor: pointer !important;
+}
+@media screen and (min-width: 746px){#card{
+  margin:2% auto 2% auto;
+  max-width: 55%;
+  padding: 1%;
+}}
+#card{
+  margin:4%;
+  padding: 1%;
+  margin-left: -20px !important;
+}
+#card img{
+  border-radius: 0 !important;
+  min-height: 80px;
+  min-width: 60px;
+}
+.fixed{
+  position: fixed !important;
+}
+@media screen and (min-width: 746px) {.addBook{
+  background: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  width:50%;
+  margin: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}}
+.addBook{
+  background-color: white;
+}
+.error{
+  color: red !important;
+  margin-left: 10%;
+  vertical-align: center;
+  font-size: .8rem;
+}
+#bookCard{
+margin: 4%;
+  padding: 4%;
+}
+form{
+  padding: 8%;
+}
+h2{
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (min-width: 960px) {.books{
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+}
+.paddingTop{
+  padding-top: 5em;
+}
+@media screen and (min-width: 1100px) {.booksRead{
+  display: grid;
+  grid-template-columns: 30% 30% 30% !important;
+}}
+@media screen and (min-width: 600px) {.booksRead{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}}
+.booksRead{
+  margin-left: -20px !important;
+}
+code{
+  color: #424242;
+}
+.delete{
+  margin-left:65% !important ;
+  margin-top: 10%;
+}
+.booksRead img{
+  border-radius: 0 !important;
+  min-height: 5rem;
+  min-width: 3.5rem;
 }

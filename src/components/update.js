@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { createPost } from '../actions/index';
+import {  savePost, deletePost } from '../actions/index';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
@@ -10,9 +10,11 @@ import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import StarRatingComponent from 'react-star-rating-component';
+import CircularProgress from 'material-ui/CircularProgress';
+
 const style = {
   marginLeft: 12,
-  marginRight: 12,
+  marginRight: 12
 };
 const completionCss = {
   fontSize: 14,
@@ -29,7 +31,7 @@ const renderInput = ({ input, label, type, meta: { touched, error, warning } }) 
 const renderTextArea = ({input, meta: { touched, error, warning }}) => (
     <div>
         <div className='row'>
-            <TextField className='col-md-7' {...input} placeholder="Add some notes" multiLine={true}
+            <TextField id="text-field-controlled" className='col-md-7' {...input} placeholder="Add some notes" multiLine={true}
       rows={4}
       rowsMax={4}/>
             {touched && ((error && <span className="error col-md-3">{error}</span>) || (warning && <span className="error">{warning}</span>))}
@@ -37,27 +39,35 @@ const renderTextArea = ({input, meta: { touched, error, warning }}) => (
     </div>
 );
 
-class PostsNew extends Component {
+class UpdateComponent extends Component {
+
   state = {
     value: 1,
     title: '',
     author: '',
     completion: 0,
     rating: 1,
-    notes: '',
-    thumbnail: ''
+    notes: ''
 
   };
-
+componentWillReceiveProps(){
+  if(!this.props.initialValues.length){
+    if (this.state.title==='') {
+      this.setState({
+        value: this.props.initialValues.value,
+        completion: this.props.initialValues.completion,
+        rating: this.props.initialValues.rating,
+        title: this.props.initialValues.title,
+        author: this.props.initialValues.author,
+        notes: this.props.initialValues.notes
+      })
+    }
+  }
+}
   handlecompletion = (event, value) => {
    this.setState({completion: value});
  };
-componentWillReceiveProps(){
-  if (this.props.initialValues) {
-      this.setState({thumbnail: this.props.initialValues.imageUrl, title: this.props.initialValues.title, author: this.props.initialValues.author})
-  }
 
-}
 
   handleChange = (event, index, value) => this.setState({value});
   handleTitleChange = (value) => this.setState({title: value});
@@ -67,30 +77,39 @@ componentWillReceiveProps(){
       }
   handleNoteChange = (value) => this.setState({notes: value});
 
+  updateBook = (id) => {
+    const values = {
+      value: this.state.value,
+      title: this.state.title,
+      author: this.state.author,
+      completion:this.state.completion,
+      rating: this.state.rating,
+      notes: this.state.notes,
+    }
+    const data = {
+      id: id,
+      values: values
+    }
+    this.props.savePost(data).then(() => { this.context.router.history.push('/'); })
+  }
+  deleteBook = (id) => {
+    this.props.deletePost(id).then(() => { this.context.router.history.push('/'); })
+  }
+
     static contextTypes = {
         router: PropTypes.object
       };
-      onSubmit(props){
-        const data = {
-          userid: this.props.user._id,
-          value: this.state.value,
-          title: this.state.title,
-          author: this.state.author,
-          completion:this.state.completion,
-          rating: this.state.rating,
-          notes: this.state.notes,
-          thumbnail: this.state.thumbnail
-        }
-    this.props.createPost(data).then(() => { this.context.router.history.push('/'); })
-      }
+
     render() {
-      console.log(this.props.initialValues);
-        const { handleSubmit } = this.props;
+      if (!this.props.initialValues) {
+        return <CircularProgress/>
+      }
         return (
           <div  className="addBook">
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
-                <Field name="title" component={renderInput} label="Title" type="text" onChange={event => this.handleTitleChange(event.target.value)} />
-                <Field name="author" component={renderInput} label="Author" type="text" onChange={event => this.handleAuthorChange(event.target.value)} />
+            <RaisedButton  onClick={() => {this.deleteBook(this.props.initialValues._id)}} secondary={true} label="Delete" className="delete" style={style}/>
+            <form >
+                <Field name="title" value={this.state.title} component={renderInput} label="Title" type="text" onChange={event => this.handleTitleChange(event.target.value)} />
+                <Field name="author" value={this.state.author} component={renderInput} label="Author" type="text" onChange={event => this.handleAuthorChange(event.target.value)} />
                 <SelectField
           floatingLabelText="Genre"
           value={this.state.value}
@@ -110,18 +129,16 @@ componentWillReceiveProps(){
          <MenuItem value={12} primaryText="Mythology" />
 
        </SelectField><br/><br/>
-       <span style={completionCss}>Progress: {Math.round(this.state.completion*100)}%</span>
+       <span style={completionCss}>Completion: {Math.round(this.state.completion*100)}%</span>
          <Slider value={this.state.completion} onChange={this.handlecompletion}/>
          <div className="row"><span style={style}>Rating:</span> <div style={style}><StarRatingComponent
-
-                    name="rate1"
                     starCount={5}
                     value={this.state.rating}
                     onStarClick={this.onStarClick.bind(this)}
                 /></div></div><br/>
-                <Field name="content" component={renderTextArea} onChange={event => this.handleNoteChange(event.target.value)} />
+                <Field name="notes" value={this.state.notes} component={renderTextArea} onChange={event => this.handleNoteChange(event.target.value)} />
                 <br/><br/>
-                <RaisedButton type="submit" primary={true} label="Add Book" style={style}/>
+                <RaisedButton onClick={() => {this.updateBook(this.props.initialValues._id)}} primary={true} label="Update" style={style}/>
                 <Link to="/"><RaisedButton type="submit" secondary={true} label="Cancel" style={style}/></Link>
             </form>
             </div>
@@ -145,10 +162,10 @@ const validate = values => {
 
     return errors;
 }
-function mapStateToProps(state, router) {
-  return { user: state.user.data, googlebook: state.books.googlebook, initialValues: router.history.location.state}
+function mapStateToProps(state) {
+  return { user: state.user.data, initialValues: state.posts.post }
 }
-export default connect(mapStateToProps, {createPost})(reduxForm({
-    form: 'PostsNew',
-    validate
-})(PostsNew));
+export default connect(mapStateToProps, {savePost, deletePost})(reduxForm({
+    form: 'Update',
+    validate,
+})(UpdateComponent));

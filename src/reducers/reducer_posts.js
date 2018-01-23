@@ -1,6 +1,6 @@
 import { FETCH_POSTS, FETCH_POST } from '../actions/index';
 
-const INITIAL_STATE = { all: [], post: null };
+const INITIAL_STATE = { all: [], post: null, genre: ['Miscellaneous', 'Fantasy', 'Adventure', 'Education', 'Comedy', 'Drama', 'Horror Fiction', 'Literary realism', 'Romance', 'Satire', 'Tragedy', 'Mythology'] };
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type){

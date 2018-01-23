@@ -20,15 +20,16 @@ passport.use(
       clientSecret: 'ixF1Xeggm_00Z572Zl5G9qlh'
     }, (accessToken, refreshToken, profile, done) => {
         User.findOne({googleId: profile.id}).then((currentUser) => {
+          console.log(profile);
             if(currentUser){
                 console.log('user is: ', currentUser);
                 done(null, currentUser);
             } else {
                 new User({
                     googleId: profile.id,
-                    username: profile.displayName
+                    name: profile.displayName,
+                    avatar : profile.photos[0].value,
                 }).save().then((newUser) => {
-                    console.log('created new user: ', newUser);
                     done(null, newUser);
                 });
             }

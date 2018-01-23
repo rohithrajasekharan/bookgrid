@@ -28,8 +28,6 @@ passport.use(new FacebookStrategy({
 	    				let newUser = new User();
 	    				newUser.facebookId = profile.id;
 	    				newUser.name = profile.displayName;
-
-
 	    				newUser.save(function(err){
 	    					if(err)
 	    						throw err;

@@ -11,8 +11,12 @@
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "lodash": "^4.17.4",
     "logger": "0.0.1",
+    "material-ui": "^0.20.0",
     "mongodb": "^3.0.1",
     "mongoose": "^4.13.9",
     "morgan": "^1.9.0",
@@ -23,14 +27,20 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
+    "rc-progress": "^2.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
+    "react-router-with-props": "^0.1.1",
+    "react-scripts": "^1.0.17",
+    "react-social-login-buttons": "^1.3.5",
+    "react-star-rating-component": "^1.3.0",
+    "react-swipeable-views": "^0.12.12",
     "redux": "^3.7.2",
     "redux-form": "^7.2.0",
     "redux-promise": "^0.5.3",
+    "typeface-roboto": "0.0.50",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.3",
     "webpack-hot-middleware": "^2.21.0"
@@ -58,5 +68,6 @@
   "bugs": {
     "url": "https://github.com/rohithrajasekharan/bookgrid/issues"
   },
-  "homepage": "https://github.com/rohithrajasekharan/bookgrid#readme"
+  "homepage": "https://github.com/rohithrajasekharan/bookgrid#readme",
+  "proxy": "http://localhost:8080"
 }

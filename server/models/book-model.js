@@ -5,15 +5,30 @@ var BookSchema = mongoose.Schema({
 	title: {
 		type: String
 	},
-	categories: {
+	author: {
 		type: String
 	},
-	content: {
+	value: {
+		type: Number
+	},
+	rating: {
+		type: Number
+	},
+	completion: {
+		type: Number
+	},
+	notes: {
+		type: String
+	},
+	userid: {
+		type: String
+	},
+	thumbnail: {
 		type: String
 	}
 });
 
-var Book = module.exports = mongoose.model('Book', BookSchema);
+const Book = module.exports = mongoose.model('Book',BookSchema);
 
 //save book to the database
 module.exports.createBook = (newBook, callback) => {
@@ -28,4 +43,16 @@ module.exports.getBookById = (id, callback) => {
 //delete book by id from the query
 module.exports.removeBookById = (id, callback) => {
   Book.findByIdAndRemove(id, callback);
+}
+
+module.exports.updateBookById =  (data, callback) => {
+	Book.findById(data.id, function (err, book) {
+    book.title = data.values.title;
+    book.author = data.values.author;
+		book.value = data.values.value;
+		book.completion = data.values.completion;
+		book.rating = data.values.rating;
+		book.notes = data.values.notes;
+    book.save(callback);
+});
 }
