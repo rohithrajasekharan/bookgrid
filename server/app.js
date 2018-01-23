@@ -15,12 +15,13 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = process.env.PORT || 8080;
+var config = require('./config');
 
 app.use(cors());//cross-origin data sharing(b/w domains or here ports)
 app.use(cookieParser());
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
-    keys: ['eagggggawgedsge']
+    keys: [config.keys]
 }));//store cookies to determine browser sessions
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));//extract and attach on reqest
@@ -35,7 +36,7 @@ app.use('/auth', authRoutes);
 //since mongoose promise is depracated
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://rohithrajasekharan:4242@ds245687.mlab.com:45687/bookgrid', {
+mongoose.connect(config.dbUrl, {
   useMongoClient: true
 }, () => {
     console.log("connected to db");
