@@ -38,7 +38,7 @@ class Authenticate extends Component {
           email: this.state.loginmail,
           password: this.state.loginpassword
         }
-    this.props.loginUser(data).then((data) => {if(data.error){ this.setState({error: "Invalid Email or Password",showMyComponent: false}) }else{ this.context.router.history.push('/');} })
+    this.props.loginUser(data).then((data) => {if(data.error){ this.setState({error: "Invalid Email or Password",showMyComponent: false}) } })
       }
     render() {
 

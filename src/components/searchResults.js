@@ -44,8 +44,11 @@ renderbookList = () => {
       )
     } //map through bboks without thumbnail
     if(!cardDetail.volumeInfo.authors){
-      return null
-    }//return null if no author(every creation has a creator)
+      return ''
+}
+      if(!cardDetail.volumeInfo.description){
+        return ''
+      }//return null if no author(every creation has a creator)
     return(
       <Card id="card">
         <CardHeader
