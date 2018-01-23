@@ -2,7 +2,7 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user-model');
-var config = require('./config');
+var config = require('../config');
 
 //store user in the session (can be called from the app as one for all setup)
 passport.serializeUser(function(user, done){
