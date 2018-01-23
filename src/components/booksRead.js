@@ -71,7 +71,7 @@ const style = {
                 actAsExpander={true}
                 avatar={cardDetail.thumbnail}
                 showExpandableButton={true}
-              />: <CardHeader
+              /> : <CardHeader
                 title={cardDetail.title}
                 subtitle={cardDetail.author}
                 actAsExpander={true}

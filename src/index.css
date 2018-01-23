@@ -17,7 +17,6 @@ input{
   font-size: 15px;
   padding: 10px;
   background-color: #4DD0E1;
-  color: white;
   border: none;
   margin-left: 10%;
 }
@@ -43,7 +42,7 @@ input{
 #card{
   margin:4%;
   padding: 1%;
-  margin-left: -20px !important;
+  margin-left: -30px !important;
 }
 #card img{
   border-radius: 0 !important;
