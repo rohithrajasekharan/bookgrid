@@ -11,6 +11,7 @@ a{
   border: none !important;
 }
 input{
+  outline: 0 !important;
   max-height: 35px !important;
   width: 50%;
   font-size: 15px;
