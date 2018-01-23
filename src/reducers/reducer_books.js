@@ -9,4 +9,4 @@ export default function(state = INITIAL_STATE, action) {
         default:
         return state;
   }
-}
+} // fetch books from search result and pass it on to reducers

@@ -1,7 +1,8 @@
+//Routes for request related to books
 const router = require('express').Router();
 const Book = require('../models/book-model');
 const mongoose = require('mongoose');
-
+//save book to the db with the users object id
 router.post('/post', (req, res) => {
   let title = req.body.title;
   let author = req.body.author;
@@ -26,17 +27,19 @@ router.post('/post', (req, res) => {
   });
 });
 
-
+//retrieve book by objectid (not userid)
 router.get('/post/:id', (req, res) => {
   Book.getBookById(req.params.id, (err,book) => {
     res.json(book);
   });
 });
+//update details of the book
 router.post('/update', (req, res) => {
   Book.updateBookById(req.body, (err,book) => {
     res.send(book);
   });
 });
+//delete book by object id of db
 router.delete('/post/:id', (req, res) => {
   Book.removeBookById(req.params.id, (err,book) => {
     res.json(book);

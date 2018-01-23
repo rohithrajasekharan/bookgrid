@@ -1,7 +1,9 @@
+//Authentication setup for facebook
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user-model');
 
+//store user in the session (can be called from the app as one for all setup)
 passport.serializeUser(function(user, done){
 		done(null, user.id);
 	});
@@ -11,7 +13,7 @@ passport.serializeUser(function(user, done){
 			done(err, user);
 		});
 });
-
+//Facebook Strategy setup
 passport.use(new FacebookStrategy({
 	    clientID: '863101123864257',
 	    clientSecret: 'dd71afcd9cb72a2589e78316fe690ef5',

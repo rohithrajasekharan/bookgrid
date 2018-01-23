@@ -11,4 +11,4 @@ export default function(state = INITIAL_STATE, action) {
         default:
         return state;
   }
-}
+} //fetch individual books as well as all stored books and store it 

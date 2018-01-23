@@ -26,6 +26,7 @@ var BookSchema = mongoose.Schema({
 	thumbnail: {
 		type: String
 	}
+	//thumbnail only for books from google books api
 });
 
 const Book = module.exports = mongoose.model('Book',BookSchema);
@@ -45,6 +46,7 @@ module.exports.removeBookById = (id, callback) => {
   Book.findByIdAndRemove(id, callback);
 }
 
+//update book details bookid(called after finding user id)
 module.exports.updateBookById =  (data, callback) => {
 	Book.findById(data.id, function (err, book) {
     book.title = data.values.title;

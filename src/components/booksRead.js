@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import StarRatingComponent from 'react-star-rating-component';
 import { Line } from 'rc-progress';
 import CircularProgress from 'material-ui/CircularProgress';
+//js styling
 const style = {
   marginLeft: 22,
   marginRight: 22,
@@ -14,23 +15,25 @@ const style = {
 };
 
  class BooksRead extends Component {
+   //get control over url
    static contextTypes = {
        router: PropTypes.object
      };
+     //to display progress circle when data is beig loaded
    state = {
      showMyComponent: true
    };
+   //trigger fetchPost action when component is being mounted
   componentWillMount(){
   this.props.fetchPosts().then(() => {this.setState({showMyComponent: false})});
-
   }
   fetchPost = (id) => {
     this.props.fetchPost(id).then(() => { this.context.router.history.push('/post/update'); })
-  }
+  }//function to trigger the update post actions
+  //function to map over book list and return cards
   renderBooks(){
-
       return this.props.cardDetail.map((cardDetail) => {
-        if (this.props.filter==='') {
+        if (this.props.filter==='') {       //display all books regardless of genre(filter)
           return(
             <div>
             <Card id="bookCard">
@@ -58,7 +61,7 @@ const style = {
         </div>
           )
         }
-      else if (this.props.filter===this.props.genre[cardDetail.value-1]) {
+      else if (this.props.filter===this.props.genre[cardDetail.value-1]) {    //display when filter is a particular genre
           return(
             <div>
             <Card id="bookCard">
@@ -89,7 +92,7 @@ const style = {
     })
   }
     render(){
-      if (this.props.cardDetail) {
+      if (this.props.cardDetail) { // multiple conditional statements to handle eroors of undefined data
         if(this.props.cardDetail.length!==0){
         return(
           <ul className="paddingTop booksRead">
@@ -99,10 +102,9 @@ const style = {
           return <div className="text-center">{ this.state.showMyComponent ? <CircularProgress className="paddingTop"/> : ""}</div>
         }
       }
-
     }
   }
-
+//data from reducers to props
 function mapStateToProps(state) {
   return { cardDetail: state.posts.all, user: state.user.data, genre: state.posts.genre}
 }

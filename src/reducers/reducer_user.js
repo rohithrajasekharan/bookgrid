@@ -9,4 +9,4 @@ export default function(state = INITIAL_STATE, action) {
         default:
         return state;
   }
-}
+} // fetch user and store it on data.data

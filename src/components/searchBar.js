@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 //eslint-disable-next-line
-var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;//screen width to control appbar title
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,8 @@ class SearchBar extends Component {
         value={this.state.term}
       onChange={event => this.onInputChange(event.target.value)}
     />
-  }else {
+  }//appbar without title
+  else {
     return (
         <div><span>BookGrid</span><input
             placeholder="Search Books"
@@ -26,7 +27,7 @@ class SearchBar extends Component {
       />
 
       </div>
-      );
+    );//appbar with title
   }
   }
 
@@ -38,7 +39,7 @@ class SearchBar extends Component {
       this.setState({term: term, searchToggle: true})
       this.props.onSearchTermChange(term);
       this.props.onSearchToggle(true);
-    }
+    }//change state of searchToggle to switch b/w searchresult and book list
   }
 }
 export default SearchBar;

@@ -11,7 +11,6 @@ import CommunicationImportContacts from 'material-ui/svg-icons/communication/imp
 import { Link} from 'react-router-dom';
 import PostsNew from './posts_new';
 import SearchBar from './searchBar';
-import Authenticate from './auth';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Popover from 'material-ui/Popover';
@@ -21,17 +20,18 @@ import BookList from './searchResults';
 import BooksRead from './booksRead';
 var _ = require('lodash');
 //eslint-disable-next-line
-var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var width = (window.innerWidth > 0) ? window.innerWidth : screen.width; //to toggle drawer component with device
 const style = {
   margin: 5,
 };
 class HomeComponent extends React.Component {
+  //get control over url
   static contextTypes = {
       router: PropTypes.object
     };
   constructor(props) {
     super(props);
-if(width<746){
+if(width<746){ //for sm devices, set a different state
   this.state = {
     open: false,
     Profileopen: false,
@@ -41,7 +41,7 @@ if(width<746){
   };
 }
 else {
-  this.state = {
+  this.state = { //for md devices
      open: true,
      Profileopen: false,
      books: [],
@@ -51,6 +51,7 @@ else {
 }
 
   }
+  //toggle drawer on window resize
 handleResize = () => {
   if(window.innerWidth<960){
     this.setState({open: false})
@@ -61,7 +62,7 @@ handleResize = () => {
 componentWillMount() {
   this.props.fetchUser()
   window.addEventListener('resize', this.handleResize)
-}
+}//dispatch user authentication and listen to window resize
 componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize)
   }
@@ -73,15 +74,15 @@ findGenre = () => {
       this.state.books.push(this.props.genre[book.value-1]);
     }
   })
-}
+}//add the genre user has and store it to be menulist
 setSearch = (value) => {
   this.setState({searchToggle: value})
-}
+}//to switch between searchResults and list of books stored
   bookSearch = (term) => {
     this.props.fetchBooks(term);
   }
 
-  handleToggle = () => this.setState({open: !this.state.open});
+  handleToggle = () => this.setState({open: !this.state.open});//drawer button action
 
 
   handleClick = (event) => {
@@ -91,30 +92,29 @@ setSearch = (value) => {
       Profileopen: true,
       anchorEl: event.currentTarget,
     });
-  };
+  };// signout pop up open
   handleGenre = (event) => {
     this.setState({
   filter:event.genre
     });
-  };
+  };// change filter when user selects a genre
 handleAllBooks= (event) => {
   this.setState({
 filter: ''
   });
-};
+};//change filter to be none
 
   handleRequestClose = () => {
     this.setState({
       Profileopen: false,
     });
-  };
+  };//signout popup close
 filterFunction = (genre) => {
   this.setState({filter: genre})
 }
 handleLogout = () => {
-  this.props.logoutUser().then(()=>{
-    this.context.router.history.push('/login');
-  })
+  this.props.logoutUser();
+  this.context.router.history.push('/login');
 }
   render() {
   return(
@@ -140,24 +140,26 @@ handleLogout = () => {
           </Menu>
  </Popover>
  <div className="books">
-  <div><Drawer containerStyle={{height: 'calc(100% - 64px)', top: 64}} open={this.state.open} >
-
-  <List>
+  <div>
+    <Drawer containerStyle={{height: 'calc(100% - 64px)', top: 64}} open={this.state.open} >
+      <List>
       <Link to='/post/new' component={PostsNew}>
       <ListItem primaryText="Add Books" leftIcon={<CommunicationImportContacts />} />
       </Link>
- </List>
-  <Divider />{
+      </List>
+  <Divider />
+  {
  this.props.books? <List>
    {this.props.books.length!==0 ? this.findGenre() : ""}
  <ListItem primaryText="All books" onClick={() => this.handleAllBooks()}/>
-
 {(this.state.books.length!==0)?
   this.state.books.map((genre, index) => {
     return <MenuItem key={index} value={index} primaryText={genre} onClick={() => this.handleGenre({genre})}/>
-  }) :  null
+  }) :  null //once books are loaded return genres
 }
-</List> : null}
+</List> : null
+//return components only when books are not undefined
+}
 </Drawer></div>
     {!this.state.searchToggle ? <BooksRead filter={this.state.filter} /> : <BookList/>}
     </div>
@@ -166,6 +168,7 @@ handleLogout = () => {
 
 
 }}
+//map reducer data to props
 function mapStateToProps(state) {
   return { user: state.user.data, books: state.posts.all, genre: state.posts.genre}
 }

@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { createUser, fetchFacebookUser, fetchGoogleUser } from '../actions/index';
+import { createUser } from '../actions/index';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import {FacebookLoginButton, GoogleLoginButton} from 'react-social-login-buttons';
-const style = {
-  width:'15em',
-  marginLeft:14,
-  marginRight:14,
-  fontSize: 14
-};
+
 const renderInput = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div className="form-group">
     <div>
@@ -20,7 +14,7 @@ const renderInput = ({ input, label, type, meta: { touched, error, warning } }) 
       {touched && ((error && <span className="error">{error}</span>) || (warning && <span className="error">{warning}</span>))}
     </div>
   </div>
-);
+);//custom component for input fields to sort errors
 
 
 class Register extends Component {
@@ -31,20 +25,12 @@ class Register extends Component {
   showMyComponent: false
   };
 
-  fetchFacebookUser = () => {
-    this.setState({showMyComponent: true})
-    this.props.fetchFacebookUser().then((data) => {if(data.error){ this.setState({error: "Invalid Email or Password",showMyComponent: false}) }else{ this.context.router.history.push('/');} })
-      }
-  fetchGoogleUser = () => {
-    this.setState({showMyComponent: true})
-    this.props.fetchGoogleUser().then((data) => {if(data.error){ this.setState({error: "Invalid Email or Password",showMyComponent: false}) }else{ this.context.router.history.push('/');} })
-      }
 
-  handleNameChange = (value) => this.setState({name:value});
-  handleEmailChange = (value) => this.setState({email: value});
-  handlePasswordChange = (value) => this.setState({password: value});
+  handleNameChange = (value) => this.setState({name:value});//name to input value
+  handleEmailChange = (value) => this.setState({email: value});//mail to input value
+  handlePasswordChange = (value) => this.setState({password: value});//password to input value
 
-
+//pass control of context router
     static contextTypes = {
         router: PropTypes.object
       };
@@ -54,7 +40,7 @@ class Register extends Component {
           email: this.state.email,
           name: this.state.name,
           password: this.state.password
-        }
+        }//submit state to action creator and take to home page
     this.props.createUser(data).then((data) => { if(!data.error){this.context.router.history.push('/');}else{ this.setState({error: "Email already exists",showMyComponent: false}) } })
 
       }
@@ -71,7 +57,7 @@ class Register extends Component {
               { this.state.showMyComponent ? <CircularProgress className="error"/> : <span className="error">{this.state.error}</span> }
               <br/><br/>
   <RaisedButton type="submit" primary={true} label="Sign up" /><br/><br/><br/>
-  
+
   </form>
 
         );
@@ -92,16 +78,20 @@ const validate = values => {
     if (!values.password) {
         errors.password = 'Content cannot be empty';
       }
+      if (values.password && values.password.length<6) {
+          errors.password = 'Password should be atleast 6 characters';
+        }
     if (!values.repassword) {
             errors.repassword = 'Content cannot be empty';
-    }  else if (values.repassword!==values.password) {
+    }
+    else if (values.repassword!==values.password) {
       errors.repassword = 'password should match'
     }
 
     return errors;
-}
+} //form validation
 
-export default connect(null, {createUser, fetchFacebookUser, fetchGoogleUser})(reduxForm({
+export default connect(null, {createUser })(reduxForm({
     form: 'Register',
     validate
 })(Register));

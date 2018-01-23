@@ -1,8 +1,9 @@
+//Authentication setup for email login
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('../models/user-model');
-
+//Local Strategy setup
 
 passport.use(
   new LocalStrategy({
@@ -26,6 +27,7 @@ User.getUserByMail(username, function(err, user){
   }
 ));
 
+//store user in the session (can be called from the app as one for all setup)
 
 passport.serializeUser(function(user, cb) {
   cb(null, user._id);

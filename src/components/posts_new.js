@@ -23,7 +23,7 @@ const renderInput = ({ input, label, type, meta: { touched, error, warning } }) 
       <TextField {...input} placeholder={label} type={type}/>
       {touched && ((error && <span className="error">{error}</span>) || (warning && <span className="error">{warning}</span>))}
     </div>
-  </div>
+  </div>//custom input component to handle errors
 );
 
 const renderTextArea = ({input, meta: { touched, error, warning }}) => (
@@ -35,7 +35,7 @@ const renderTextArea = ({input, meta: { touched, error, warning }}) => (
             {touched && ((error && <span className="error col-md-3">{error}</span>) || (warning && <span className="error">{warning}</span>))}
         </div>
     </div>
-);
+);//custom component for taking notes
 
 class PostsNew extends Component {
   state = {
@@ -51,21 +51,21 @@ class PostsNew extends Component {
 
   handlecompletion = (event, value) => {
    this.setState({completion: value});
- };
+ };//set state of reading progress to input value
 componentWillReceiveProps(){
   if (this.props.initialValues) {
       this.setState({thumbnail: this.props.initialValues.imageUrl, title: this.props.initialValues.title, author: this.props.initialValues.author})
   }
-
+//change initialvalues to that from book selected on search
 }
 
-  handleChange = (event, index, value) => this.setState({value});
-  handleTitleChange = (value) => this.setState({title: value});
-  handleAuthorChange = (value) => this.setState({author: value});
+  handleChange = (event, index, value) => this.setState({value});// genre to input value
+  handleTitleChange = (value) => this.setState({title: value}); //title to input value
+  handleAuthorChange = (value) => this.setState({author: value}); //author to input value
   onStarClick(nextValue, prevValue, name) {
           this.setState({rating: nextValue});
-      }
-  handleNoteChange = (value) => this.setState({notes: value});
+      } //star rating to input value
+  handleNoteChange = (value) => this.setState({notes: value}); //notes to input value
 
     static contextTypes = {
         router: PropTypes.object
@@ -80,12 +80,11 @@ componentWillReceiveProps(){
           rating: this.state.rating,
           notes: this.state.notes,
           thumbnail: this.state.thumbnail
-        }
+        }//submit values from props(if initialValues not changed) and state
     this.props.createPost(data).then(() => { this.context.router.history.push('/'); })
-      }
+  }//take to home page after submit
     render() {
-      console.log(this.props.initialValues);
-        const { handleSubmit } = this.props;
+        const { handleSubmit } = this.props;//get handleSubmit fn from redux form
         return (
           <div  className="addBook">
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
@@ -144,7 +143,7 @@ const validate = values => {
     }
 
     return errors;
-}
+} //form validation
 function mapStateToProps(state, router) {
   return { user: state.user.data, googlebook: state.books.googlebook, initialValues: router.history.location.state}
 }

@@ -20,7 +20,7 @@ class BookList extends React.Component {
 renderbookList = () => {
   if(!this.props.cardDetail){
     return null;
-  }
+  } //if no books in list return null
 
   return this.props.cardDetail.map((cardDetail) => {
     if(!cardDetail.volumeInfo.imageLinks){
@@ -42,10 +42,10 @@ renderbookList = () => {
           </CardText>
         </Card>
       )
-    }
+    } //map through bboks without thumbnail
     if(!cardDetail.volumeInfo.authors){
       return null
-    }
+    }//return null if no author(every creation has a creator)
     return(
       <Card id="card">
         <CardHeader
@@ -57,29 +57,35 @@ renderbookList = () => {
         />
         <CardActions>
           <Link to={{
-    pathname: '/post/new',
-    state: { title: cardDetail.volumeInfo.title, author: cardDetail.volumeInfo.authors[0], imageUrl: cardDetail.volumeInfo.imageLinks.thumbnail }
-  }}>  <FlatButton label="Add to List"/></Link></CardActions>
-        <CardText expandable={true}>
-        {cardDetail.volumeInfo.description}
-        </CardText>
-      </Card>
+            pathname: '/post/new',
+            state: {
+               title: cardDetail.volumeInfo.title, author: cardDetail.volumeInfo.authors[0],
+               imageUrl: cardDetail.volumeInfo.imageLinks.thumbnail
+             }//pass state defined as props
+          }}>
+          <FlatButton label="Add to List"/></Link></CardActions>
+          <CardText expandable={true}>
+            {cardDetail.volumeInfo.description}
+          </CardText>
+        </Card>
     )
   })
 }
 render(){
-return  (<div>{ this.state.showMyComponent ? <div className="text-center"><CircularProgress className="paddingTop"/></div> :   <ul className="paddingTop">
+return  (<div>{ this.state.showMyComponent ?
+   <div className="text-center"><CircularProgress className="paddingTop"/></div> :
+    <ul className="paddingTop">
     {this.renderbookList()}
     </ul>}</div>
-  )
+  ) //choose b/w loading bar and list of books
 }
 }
 function mapStateToProps(state) {
-  if(!state.books.all){
+  if(!state.books.all){ //books are undefined pass empty array as books
     return {
       cardDetail: []
     }
-  }
+  }//else return array of books from reducer
   return{
     cardDetail: state.books.all.items
   };

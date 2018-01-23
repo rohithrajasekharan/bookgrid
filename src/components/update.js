@@ -26,7 +26,7 @@ const renderInput = ({ input, label, type, meta: { touched, error, warning } }) 
       {touched && ((error && <span className="error">{error}</span>) || (warning && <span className="error">{warning}</span>))}
     </div>
   </div>
-);
+);//custom component for error handling
 
 const renderTextArea = ({input, meta: { touched, error, warning }}) => (
     <div>
@@ -37,7 +37,7 @@ const renderTextArea = ({input, meta: { touched, error, warning }}) => (
             {touched && ((error && <span className="error col-md-3">{error}</span>) || (warning && <span className="error">{warning}</span>))}
         </div>
     </div>
-);
+);//notes
 
 class UpdateComponent extends Component {
 
@@ -63,7 +63,8 @@ componentWillReceiveProps(){
       })
     }
   }
-}
+}//change state and props similar to new post component
+//change default values to input values
   handlecompletion = (event, value) => {
    this.setState({completion: value});
  };
@@ -91,10 +92,10 @@ componentWillReceiveProps(){
       values: values
     }
     this.props.savePost(data).then(() => { this.context.router.history.push('/'); })
-  }
+  }//pass data from state to update post action creator
   deleteBook = (id) => {
     this.props.deletePost(id).then(() => { this.context.router.history.push('/'); })
-  }
+  }//delete trigger with delete action creator
 
     static contextTypes = {
         router: PropTypes.object
@@ -103,7 +104,7 @@ componentWillReceiveProps(){
     render() {
       if (!this.props.initialValues) {
         return <CircularProgress/>
-      }
+      }//if loading takes time show loading component
         return (
           <div  className="addBook">
             <RaisedButton  onClick={() => {this.deleteBook(this.props.initialValues._id)}} secondary={true} label="Delete" className="delete" style={style}/>
@@ -161,7 +162,7 @@ const validate = values => {
     }
 
     return errors;
-}
+} //form validation
 function mapStateToProps(state) {
   return { user: state.user.data, initialValues: state.posts.post }
 }

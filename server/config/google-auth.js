@@ -1,7 +1,8 @@
+//Authentication setup for google
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const User = require('../models/user-model');
-
+//store user in the session (can be called from the app as one for all setup)
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
@@ -12,7 +13,7 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-
+//Google Strategy setup
 passport.use(
     new GoogleStrategy({
       callbackURL: '/auth/google/redirect',

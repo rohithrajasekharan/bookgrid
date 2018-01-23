@@ -1,14 +1,15 @@
+//Root component with all the routes
 import React from 'react';
-import PropTypes from 'prop-types';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';//theme the material ui components
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions/index';
 import HomeComponent from './dashboard';
-import { Route, BrowserRouter, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import PostsNew from './posts_new';
 import Authenticate from './auth.js';
 import UpdateComponent from './update';
-import { PrivateRoute } from  'react-router-with-props'
+import { PrivateRoute } from  'react-router-with-props';//redirect unauthenticated users to login
+
 class App extends React.Component{
 
   render(){
@@ -26,7 +27,8 @@ class App extends React.Component{
     </MuiThemeProvider>)
   }
 }
+//add the application state(not react state) from reducers to props
 function mapStateToProps(state) {
   return { user: state.user.data }
 }
-export default connect(mapStateToProps, { fetchUser })(App);
+export default connect(mapStateToProps, { fetchUser })(App);//connect redux data and action to App component
