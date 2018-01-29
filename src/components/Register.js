@@ -41,7 +41,7 @@ class Register extends Component {
           name: this.state.name,
           password: this.state.password
         }//submit state to action creator and take to home page
-    this.props.createUser(data).then((data) => { if(data.error){ this.setState({error: "Email already exists",showMyComponent: false}) } })
+    this.props.createUser(data).then((data) => { if(data.error){ this.setState({error: "Email already exists",showMyComponent: false}) }else{window.location.href = '/';} })
 
       }
     render() {
